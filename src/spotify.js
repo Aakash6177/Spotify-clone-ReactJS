@@ -2,7 +2,7 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 // after authentication it will redirect to the home page that is the local host 3000
-const reduirectUri = "https://localhost:3000/";
+const reduirectUri = "https://localhost:3000";
 
 // setting up some variables for later use
 const client_id = "a5fb2dc08e7c4d3491f52e128625ec1d";
