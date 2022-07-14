@@ -17,6 +17,20 @@ const scopes = [
   "user-modify-playback-state",
 ];
 
+// get the acces token from the URL and save it
+
+export const getTokenFromUrl = () => {
+  return window.location.hash
+    .substring(1)
+    .split("&")
+    .reduce((initial, item) => {
+      let parts = item.split("=");
+      initial[parts[0]] = decodeURIComponent(parts[1]);
+
+      return initial;
+    }, {});
+};
+
 // use all of the stuff above and make a login url using string interpilation
 export const loginUrl = `${authEndpoint}?client_id=${client_id}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"
