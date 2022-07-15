@@ -3,12 +3,15 @@ import "./App.css";
 import Login from "./Login";
 import { getTokenFromUrl } from "./spotify";
 import SpotifyWebApi from "spotify-web-api-js";
+import Player from "./Player";
+import { useDataLayerValue } from "./DataLayer";
 
 // this is the instance of spotify inside of our app
 const spotify = new SpotifyWebApi();
 
 function App() {
   const [token, setToken] = useState(null);
+  const [{ user }, dispatch] = useDataLayerValue(); // this is going to pull from the data layer
 
   // we are going to use the use iffect hook, that is going to run code based on a given code
   useEffect(() => {
@@ -21,18 +24,25 @@ function App() {
 
     if (_token) {
       setToken(_token);
+
       spotify.setAccessToken(_token);
       spotify.getMe().then((user) => {
-        console.log("Show me the user", user);
+        // this way we are retireving the user's information, using that token
+        // console.log("Show me the user", user);
+
+        dispatch({
+          type: "SET_USER",
+          user: user, // this is where we are pushing stuff in data layer
+        });
       }); // this gets the user account, and returns a promise
     }
 
     console.log("I have a token", token);
   }, []);
 
-  return (
-    <div className="App">{token ? <h1>I am logged in </h1> : <Login />}</div>
-  );
+  console.log("User: ", user);
+
+  return <div className="App">{token ? <Player /> : <Login />}</div>;
 }
 
 export default App;
