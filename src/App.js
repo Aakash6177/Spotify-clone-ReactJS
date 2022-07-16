@@ -38,7 +38,7 @@ function App() {
     }
 
     console.log("I have a token", token);
-  }, []);
+  }, [dispatch, token]);
 
   console.log("User: ", user);
 
